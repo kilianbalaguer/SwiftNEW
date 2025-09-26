@@ -16,7 +16,7 @@ struct HalloweenView: View {
         GeometryReader { geometry in
             ZStack {
                 ForEach(pumpkins) { pumpkin in
-                    Image("Ghost") // Replace with pumpkin asset if you have
+                    Image("ghost.png") // Replace with pumpkin asset if you have
                         .resizable()
                         .foregroundColor(.orange)
                         .frame(width: pumpkin.size, height: pumpkin.size)
@@ -37,13 +37,15 @@ struct HalloweenView: View {
                 }
             }
             .onReceive(timer) { _ in
-                for index in pumpkins.indices {
-                    pumpkins[index].y += pumpkins[index].speed
-                    pumpkins[index].rotation += Double.random(in: -2...2)
-                    if pumpkins[index].y > geometry.size.height + 50 {
-                        pumpkins[index].y = -50
-                        pumpkins[index].x = CGFloat.random(in: 0...geometry.size.width)
+                pumpkins = pumpkins.map { pumpkin in
+                    var p = pumpkin
+                    p.y += p.speed
+                    p.rotation += Double.random(in: -2...2)
+                    if p.y > geometry.size.height + 50 {
+                        p.y = -50
+                        p.x = CGFloat.random(in: 0...geometry.size.width)
                     }
+                    return p
                 }
             }
         }
