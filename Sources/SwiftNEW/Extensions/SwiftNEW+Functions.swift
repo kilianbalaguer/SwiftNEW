@@ -16,6 +16,12 @@ import Drops
 @available(iOS 15.0, watchOS 8.0, macOS 12.0, tvOS 17.0, *)
 extension SwiftNEW {
     
+    public func resetVersionTracking() {
+        versionText = ""
+        buildText = ""
+    }
+}
+    
     // MARK: - Functions
     public func compareVersion() {
         let currentVersion = Bundle.version
