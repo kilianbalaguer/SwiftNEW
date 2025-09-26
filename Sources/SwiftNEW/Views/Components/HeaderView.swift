@@ -25,9 +25,15 @@ extension SwiftNEW {
                     AppIconView()
                 }
                 Text(String(localized: "What's New in", bundle: .module))
-                    .bold().font(.largeTitle)
+                    .bold()
+                    .font(.largeTitle)
+                    .multilineTextAlignment(.center) // center text
                 Text("\(String(localized: "Version", bundle: .module)) \(Bundle.versionBuild)")
-                    .bold().font(.title).foregroundColor(.secondary)
+                    .bold()
+                    .font(.title)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center) // center text
+                    .frame(maxWidth: .infinity, alignment: .center) // center horizontally
             }
             if align == .trailing {
                 AppIconView()
@@ -38,9 +44,15 @@ extension SwiftNEW {
     public var headings: some View {
         VStack {
             Text(String(localized: "What's New in", bundle: .module))
-                .bold().font(.largeTitle)
+                .bold()
+                .font(.largeTitle)
+                .multilineTextAlignment(.center)
             Text("\(String(localized: "Version", bundle: .module)) \(Bundle.versionBuild)")
-                .bold().font(.title).foregroundColor(.secondary)
+                .bold()
+                .font(.title)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity, alignment: .center)
         }
     }
     #endif
