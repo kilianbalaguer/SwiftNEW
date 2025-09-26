@@ -24,10 +24,10 @@ extension SwiftNEW {
                 if showDrop {
                     drop()
                 } else {
-                    show.toggle()
+                    withAnimation { show.toggle() }
                 }
                 #else
-                show.toggle()
+                withAnimation { show.toggle() }
                 #endif
             }) {
                 Label(label, systemImage: labelImage)
@@ -44,25 +44,24 @@ extension SwiftNEW {
             .opacity(size == "invisible" ? 0 : 1)
             .modifier(ConditionalGlassModifier(isEnabled: glass, shadowColor: color))
 
-            // MARK: - Inline Content
+            // MARK: - Floating Overlay
             if show {
                 ZStack {
-                    if mesh {
-                        MeshView(color: $color)
-                    }
+                    // Semi-transparent background
+                    Color.black.opacity(0.4)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            withAnimation { show = false } // dismiss on tap outside
+                        }
 
-                    if specialEffect == "Christmas" {
-                        SnowfallView()
-                    }
-
-                    VStack {
+                    VStack(spacing: 16) {
                         sheetCurrent
                             .frame(maxWidth: platformWidth)
                             .background(.ultraThinMaterial)
                             .modifier(PresentationBackgroundModifier())
                             .cornerRadius(20)
                             .padding()
-                        
+
                         if history {
                             sheetHistory
                                 .frame(maxWidth: platformWidth)
@@ -72,8 +71,8 @@ extension SwiftNEW {
                                 .padding(.horizontal)
                         }
                     }
+                    .transition(.scale.combined(with: .opacity))
                 }
-                .transition(.opacity.combined(with: .scale))
                 .zIndex(1)
             }
         }
