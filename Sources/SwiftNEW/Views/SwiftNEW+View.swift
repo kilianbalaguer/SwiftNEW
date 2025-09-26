@@ -15,45 +15,36 @@ import Drops
 
 @available(iOS 15.0, watchOS 8.0, macOS 12.0, tvOS 17.0, *)
 extension SwiftNEW {
-
     public var body: some View {
-        VStack {
-            // MARK: - Main Button
-            Button(action: {
-                #if os(iOS)
-                if showDrop {
-                    drop()
-                } else {
-                    show.toggle()
-                }
-                #else
-                show.toggle()
+        Button(action: {
+            #if os(iOS)
+            if showDrop {
+                drop()
+            } else {
+                show = true
+            }
+            #else
+            show = true
+            #endif
+        }) {
+            Label(label, systemImage: labelImage)
+                .frame(
+                    width: size == "mini" ? nil : (size == "invisible" ? 0 : platformWidth),
+                    height: size == "mini" ? nil : (size == "invisible" ? 0 : 50)
+                )
+                #if os(iOS) && !os(visionOS)
+                .foregroundColor(labelColor)
+                .background(size != "mini" && size != "invisible" ? color : Color.clear)
+                .cornerRadius(15)
                 #endif
-            }) {
-                Label(label, systemImage: labelImage)
-                    .frame(
-                        width: size == "mini" ? nil : (size == "invisible" ? 0 : platformWidth),
-                        height: size == "mini" ? nil : (size == "invisible" ? 0 : 50)
-                    )
-                    #if os(iOS) && !os(visionOS)
-                    .foregroundColor(labelColor)
-                    .background(size != "mini" && size != "invisible" ? color : Color.clear)
-                    .cornerRadius(15)
-                    #endif
-            }
-            .opacity(size == "invisible" ? 0 : 1)
-            .modifier(ConditionalGlassModifier(isEnabled: glass, shadowColor: color))
-
-            // MARK: - Inline “Real View”
-            if show {
-                sheetContent
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
-            }
         }
-        .animation(.default, value: show)
+        .opacity(size == "invisible" ? 0 : 1)
+        .modifier(ConditionalGlassModifier(isEnabled: glass, shadowColor: color))
+        .sheet(isPresented: $show) {
+            sheetContent
+        }
     }
-
-    // MARK: - Platform Width
+    
     private var platformWidth: CGFloat {
         #if os(tvOS)
         400
@@ -61,8 +52,7 @@ extension SwiftNEW {
         300
         #endif
     }
-
-    // MARK: - Sheet Content (now inline)
+    
     private var sheetContent: some View {
         ZStack {
             if mesh {
@@ -71,24 +61,18 @@ extension SwiftNEW {
             if specialEffect == "Christmas" {
                 SnowfallView()
             }
-            VStack {
-                sheetCurrent
-
-                // Show history inline
-                if historySheet {
+            sheetCurrent
+                .sheet(isPresented: $historySheet) {
                     historySheetContent
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
-            }
-            #if os(visionOS)
-            .padding()
-            #endif
+                #if os(visionOS)
+                .padding()
+                #endif
         }
         .background(.ultraThinMaterial)
         .modifier(PresentationBackgroundModifier())
     }
-
-    // MARK: - History Content (inline)
+    
     private var historySheetContent: some View {
         ZStack {
             if mesh {
@@ -107,7 +91,6 @@ extension SwiftNEW {
     }
 }
 
-// MARK: - Background Modifier
 private struct PresentationBackgroundModifier: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 16.4, tvOS 16.4, *) {
@@ -118,11 +101,10 @@ private struct PresentationBackgroundModifier: ViewModifier {
     }
 }
 
-// MARK: - Glass Modifier
 private struct ConditionalGlassModifier: ViewModifier {
     let isEnabled: Bool
     let shadowColor: Color
-
+    
     func body(content: Content) -> some View {
         if isEnabled {
             content.glass(shadowColor: shadowColor)
