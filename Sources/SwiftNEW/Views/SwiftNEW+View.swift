@@ -58,16 +58,28 @@ extension SwiftNEW {
             if mesh {
                 MeshView(color: $color)
             }
-            if specialEffect == "Christmas" {
+            
+            // Special Effects
+            switch specialEffect {
+            case "Christmas":
                 SnowfallView()
+            case "Release":
+                BalloonView()
+            case "Halloween":
+                HalloweenView()
+            default:
+                EmptyView()
             }
-            sheetCurrent
-                .sheet(isPresented: $historySheet) {
+            
+            VStack {
+                sheetCurrent
+                if historySheet {
                     historySheetContent
                 }
-                #if os(visionOS)
-                .padding()
-                #endif
+            }
+            #if os(visionOS)
+            .padding()
+            #endif
         }
         .background(.ultraThinMaterial)
         .modifier(PresentationBackgroundModifier())
@@ -78,19 +90,29 @@ extension SwiftNEW {
             if mesh {
                 MeshView(color: $color)
             }
-            if specialEffect == "Christmas" {
+            
+            switch specialEffect {
+            case "Christmas":
                 SnowfallView()
+            case "Release":
+                BalloonView()
+            case "Halloween":
+                HalloweenView()
+            default:
+                EmptyView()
             }
+            
             sheetHistory
-                #if os(visionOS)
-                .padding()
-                #endif
+            #if os(visionOS)
+            .padding()
+            #endif
         }
         .background(.ultraThinMaterial)
         .modifier(PresentationBackgroundModifier())
     }
 }
 
+// MARK: - Background Modifier
 private struct PresentationBackgroundModifier: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 16.4, tvOS 16.4, *) {
@@ -101,6 +123,7 @@ private struct PresentationBackgroundModifier: ViewModifier {
     }
 }
 
+// MARK: - Glass Modifier
 private struct ConditionalGlassModifier: ViewModifier {
     let isEnabled: Bool
     let shadowColor: Color
