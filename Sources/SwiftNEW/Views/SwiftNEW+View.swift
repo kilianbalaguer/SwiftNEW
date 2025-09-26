@@ -15,70 +15,36 @@ import Drops
 
 @available(iOS 15.0, watchOS 8.0, macOS 12.0, tvOS 17.0, *)
 extension SwiftNEW {
-
     public var body: some View {
-        ZStack {
-            // MARK: - Button
-            Button(action: {
-                #if os(iOS)
-                if showDrop {
-                    drop()
-                } else {
-                    withAnimation { show.toggle() }
-                }
-                #else
-                withAnimation { show.toggle() }
+        Button(action: {
+            #if os(iOS)
+            if showDrop {
+                drop()
+            } else {
+                show = true
+            }
+            #else
+            show = true
+            #endif
+        }) {
+            Label(label, systemImage: labelImage)
+                .frame(
+                    width: size == "mini" ? nil : (size == "invisible" ? 0 : platformWidth),
+                    height: size == "mini" ? nil : (size == "invisible" ? 0 : 50)
+                )
+                #if os(iOS) && !os(visionOS)
+                .foregroundColor(labelColor)
+                .background(size != "mini" && size != "invisible" ? color : Color.clear)
+                .cornerRadius(15)
                 #endif
-            }) {
-                Label(label, systemImage: labelImage)
-                    .frame(
-                        width: size == "mini" ? nil : (size == "invisible" ? 0 : platformWidth),
-                        height: size == "mini" ? nil : (size == "invisible" ? 0 : 50)
-                    )
-                    #if os(iOS) && !os(visionOS)
-                    .foregroundColor(labelColor)
-                    .background(size != "mini" && size != "invisible" ? color : Color.clear)
-                    .cornerRadius(15)
-                    #endif
-            }
-            .opacity(size == "invisible" ? 0 : 1)
-            .modifier(ConditionalGlassModifier(isEnabled: glass, shadowColor: color))
-
-            // MARK: - Floating Overlay
-            if show {
-                ZStack {
-                    // Semi-transparent background
-                    Color.black.opacity(0.4)
-                        .ignoresSafeArea()
-                        .onTapGesture {
-                            withAnimation { show = false } // dismiss on tap outside
-                        }
-
-                    VStack(spacing: 16) {
-                        sheetCurrent
-                            .frame(maxWidth: platformWidth)
-                            .background(.ultraThinMaterial)
-                            .modifier(PresentationBackgroundModifier())
-                            .cornerRadius(20)
-                            .padding()
-
-                        if history {
-                            sheetHistory
-                                .frame(maxWidth: platformWidth)
-                                .background(.ultraThinMaterial)
-                                .modifier(PresentationBackgroundModifier())
-                                .cornerRadius(20)
-                                .padding(.horizontal)
-                        }
-                    }
-                    .transition(.scale.combined(with: .opacity))
-                }
-                .zIndex(1)
-            }
+        }
+        .opacity(size == "invisible" ? 0 : 1)
+        .modifier(ConditionalGlassModifier(isEnabled: glass, shadowColor: color))
+        .sheet(isPresented: $show) {
+            sheetContent
         }
     }
-
-    // MARK: - Platform Width
+    
     private var platformWidth: CGFloat {
         #if os(tvOS)
         400
@@ -86,29 +52,64 @@ extension SwiftNEW {
         300
         #endif
     }
-
-    // MARK: - Presentation Background Modifier
-    private struct PresentationBackgroundModifier: ViewModifier {
-        func body(content: Content) -> some View {
-            if #available(iOS 16.4, tvOS 16.4, *) {
-                content.presentationBackground(.thinMaterial)
-            } else {
-                content
+    
+    private var sheetContent: some View {
+        ZStack {
+            if mesh {
+                MeshView(color: $color)
             }
+            if specialEffect == "Christmas" {
+                SnowfallView()
+            }
+            sheetCurrent
+                .sheet(isPresented: $historySheet) {
+                    historySheetContent
+                }
+                #if os(visionOS)
+                .padding()
+                #endif
+        }
+        .background(.ultraThinMaterial)
+        .modifier(PresentationBackgroundModifier())
+    }
+    
+    private var historySheetContent: some View {
+        ZStack {
+            if mesh {
+                MeshView(color: $color)
+            }
+            if specialEffect == "Christmas" {
+                SnowfallView()
+            }
+            sheetHistory
+                #if os(visionOS)
+                .padding()
+                #endif
+        }
+        .background(.ultraThinMaterial)
+        .modifier(PresentationBackgroundModifier())
+    }
+}
+
+private struct PresentationBackgroundModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 16.4, tvOS 16.4, *) {
+            content.presentationBackground(.thinMaterial)
+        } else {
+            content
         }
     }
+}
 
-    // MARK: - Conditional Glass Modifier
-    private struct ConditionalGlassModifier: ViewModifier {
-        let isEnabled: Bool
-        let shadowColor: Color
-
-        func body(content: Content) -> some View {
-            if isEnabled {
-                content.glass(shadowColor: shadowColor)
-            } else {
-                content
-            }
+private struct ConditionalGlassModifier: ViewModifier {
+    let isEnabled: Bool
+    let shadowColor: Color
+    
+    func body(content: Content) -> some View {
+        if isEnabled {
+            content.glass(shadowColor: shadowColor)
+        } else {
+            content
         }
     }
 }
