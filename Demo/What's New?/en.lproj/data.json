@@ -1,0 +1,242 @@
+[
+    {
+        "version": "6.1",
+        "subVersion": "6.1.0",
+        "new": [
+            {
+                "icon": "hammer",
+                "title": "Project",
+                "subtitle": "Restructure",
+                "body": "Seperate files and folders for better maintenance."
+            },
+            {
+                "icon": "macpro.gen3.server",
+                "title": "Serverless",
+                "subtitle": "Design",
+                "body": "Free and open source! ❤️‍🔥"
+            },
+            {
+                "icon": "arrow.triangle.pull",
+                "title": "Contribute",
+                "subtitle": "Together",
+                "body": "Pull requests and make it better for everyone! 🎉"
+            }
+        ]
+    },
+    {
+        "version": "6.0",
+        "subVersion": "6.0.0",
+        "new": [
+            {
+                "icon": "wineglass",
+                "title": "Glass",
+                "subtitle": "Effect",
+                "body": "Available now!"
+            }
+        ]
+    },
+    {
+        "version": "5.5",
+        "subVersion": "5.5.0",
+        "new": [
+            {
+                "icon": "snowflake",
+                "title": "Snow",
+                "subtitle": "Effect",
+                "body": "More Special Animation Coming Soon!"
+            }
+        ]
+    },
+    {
+        "version": "5.4",
+        "subVersion": "5.4.0",
+        "new": [
+            {
+                "icon": "pencil.tip",
+                "title": "Matched",
+                "subtitle": "Mesh BG Color",
+                "body": "A standardized design."
+            }
+        ]
+    },
+    {
+        "version": "5.3",
+        "subVersion": "5.3.0",
+        "new": [
+            {
+                "icon": "pencil.tip",
+                "title": "Add",
+                "subtitle": "Mesh BG",
+                "body": "Better styles and design."
+            }
+        ]
+    },
+    {
+        "version": "5.2",
+        "subVersion": "5.2.0",
+        "new": [
+            {
+                "icon": "hammer",
+                "title": "Default",
+                "subtitle": "Option",
+                "body": "New optional binding for less code."
+            }
+        ]
+    },
+    {
+        "version": "5.1",
+        "subVersion": "5.1.0",
+        "new": [
+            {
+                "icon": "character.book.closed",
+                "title": "Update",
+                "subtitle": "Demo",
+                "body": "For 5.0 version."
+            }
+        ]
+    },
+    {
+        "version": "5.0",
+        "subVersion": "5.0.0",
+        "new": [
+            {
+                "icon": "character.book.closed",
+                "title": "Support",
+                "subtitle": "Localization",
+                "body": "Powered by Apple String Catalog."
+            },
+            {
+                "icon": "pip.remove",
+                "title": "Drop",
+                "subtitle": "Support",
+                "body": "For iOS14, watchOS7, and macOS11."
+            }
+        ]
+    },
+    {
+        "version": "4.2",
+        "subVersion": "4.2.0",
+        "new": [
+            {
+                "icon": "hammer",
+                "title": "Minor",
+                "subtitle": "Update",
+                "body": "Minor bug fixes, and UI improvement."
+            }
+        ]
+    },
+    {
+        "version": "4.1",
+        "subVersion": "4.1.0",
+        "new": [
+            {
+                "icon": "eye",
+                "title": "Support Vision Pro",
+                "subtitle": "& visionOS",
+                "body": "Drops Framework is temp-disabled due to conflict."
+            }
+        ]
+    },
+    {
+        "version": "4.0",
+        "subVersion": "4.0.0",
+        "new": [
+            {
+                "icon": "number",
+                "title": "Better Compatible",
+                "subtitle": "in Version & Build",
+                "body": "You can use x.y.z or x.y now."
+            }
+        ]
+    },
+    {
+        "version": "3.9",
+        "new": [
+            {
+                "icon": "app.fill",
+                "title": "App Icon",
+                "subtitle": "Supported",
+                "body": "on iOS."
+            },
+            {
+                "icon": "app",
+                "title": "Demo",
+                "subtitle": "is Better now",
+                "body": "Following the Package Version."
+            }
+        ]
+    },
+    {
+        "version": "1.5",
+        "new": [
+            {
+                "icon": "hammer",
+                "title": "Layout",
+                "subtitle": "Fixed",
+                "body": "on iOS Landscape."
+            }
+        ]
+    },
+    {
+        "version": "1.4",
+        "new": [
+            {
+                "icon": "hammer",
+                "title": "Crash",
+                "subtitle": "Fixed",
+                "body": "on macOS."
+            }
+        ]
+    },
+    {
+        "version": "1.3",
+        "new": [
+            {
+                "icon": "bell.badge",
+                "title": "Remote Drop",
+                "subtitle": "Supported",
+                "body": "Instead of full page sheet, you can use a small drop too!"
+            }
+        ]
+    },
+    {
+        "version": "1.2",
+        "new": [
+            {
+                "icon": "square.and.arrow.down.fill",
+                "title": "Remote File",
+                "subtitle": "Supported",
+                "body": "Direct load via remote storage. Easy!"
+            }
+        ]
+    },
+    {
+        "version": "1.1",
+        "new": [
+            {
+                "icon": "hammer.fill",
+                "title": "Bug fixes",
+                "subtitle": "Broken UI",
+                "body": "Available for iOS 16, iPadOS 16, macOS 13"
+            },
+            {
+                "icon": "square.and.arrow.down.fill",
+                "title": "Local File",
+                "subtitle": "Supported",
+                "body": "Direct load via local storage. Super fast!"
+            },
+            {
+                "icon": "macpro.gen3.server",
+                "title": "Serverless",
+                "subtitle": "Design",
+                "body": "Free and open source! Created by Ming with ❤️‍🔥"
+            },
+            {
+                "icon": "arrow.triangle.pull",
+                "title": "Contribute",
+                "subtitle": "Together",
+                "body": "Pull requests and make it better for everyone!"
+            }
+        ]
+    }
+]

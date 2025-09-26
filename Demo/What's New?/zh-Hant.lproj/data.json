@@ -1,0 +1,242 @@
+[
+    {
+        "version": "6.1",
+        "subVersion": "6.1.0",
+        "new": [
+            {
+                "icon": "hammer",
+                "title": "專案",
+                "subtitle": "重構",
+                "body": "分離檔案和資料夾以便更好地維護。"
+            },
+            {
+                "icon": "macpro.gen3.server",
+                "title": "無服務器",
+                "subtitle": "設計",
+                "body": "免費開源! ❤️‍🔥"
+            },
+            {
+                "icon": "arrow.triangle.pull",
+                "title": "貢獻",
+                "subtitle": "一起",
+                "body": "提出請求，讓每個人都變得更好! 🎉"
+            }
+        ]
+    },
+    {
+        "version": "6.0",
+        "subVersion": "6.0.0",
+        "new": [
+            {
+                "icon": "wineglass",
+                "title": "玻璃",
+                "subtitle": "效果",
+                "body": "現已推出!"
+            }
+        ]
+    },
+    {
+        "version": "5.5",
+        "subVersion": "5.5.0",
+        "new": [
+            {
+                "icon": "snowflake",
+                "title": "飄雪",
+                "subtitle": "效果",
+                "body": "更多特別效果即將推出!"
+            }
+        ]
+    },
+    {
+        "version": "5.4",
+        "subVersion": "5.4.0",
+        "new": [
+            {
+                "icon": "pencil.tip",
+                "title": "匹配",
+                "subtitle": "網格背景顏色",
+                "body": "標準化設計。"
+            }
+        ]
+    },
+    {
+        "version": "5.3",
+        "subVersion": "5.3.0",
+        "new": [
+            {
+                "icon": "pencil.tip",
+                "title": "新增",
+                "subtitle": "網格背景",
+                "body": "更好的設計。"
+            }
+        ]
+    },
+    {
+        "version": "5.2",
+        "subVersion": "5.2.0",
+        "new": [
+            {
+                "icon": "hammer",
+                "title": "預設",
+                "subtitle": "選項",
+                "body": "減少重複程式碼。"
+            }
+        ]
+    },
+    {
+        "version": "5.1",
+        "subVersion": "5.1.0",
+        "new": [
+            {
+                "icon": "character.book.closed",
+                "title": "更新",
+                "subtitle": "示範內容",
+                "body": "針對 5.0 版本。"
+            }
+        ]
+    },
+    {
+        "version": "5.0",
+        "subVersion": "5.0.0",
+        "new": [
+            {
+                "icon": "character.book.closed",
+                "title": "支援",
+                "subtitle": "翻譯",
+                "body": "由 Apple String Catalog 技術提供。"
+            },
+            {
+                "icon": "pip.remove",
+                "title": "終結",
+                "subtitle": "支援",
+                "body": "iOS14, watchOS7, and macOS11。"
+            }
+        ]
+    },
+    {
+        "version": "4.2",
+        "subVersion": "4.2.0",
+        "new": [
+            {
+                "icon": "hammer",
+                "title": "小型",
+                "subtitle": "更新",
+                "body": "一些錯誤修正和UI更新"
+            }
+        ]
+    },
+    {
+        "version": "4.1",
+        "subVersion": "4.1.0",
+        "new": [
+            {
+                "icon": "eye",
+                "title": "支持 Vision Pro",
+                "subtitle": "和 visionOS",
+                "body": "Drops Framework 由於衝突而被臨時禁用。"
+            }
+        ]
+    },
+    {
+        "version": "4.0",
+        "subVersion": "4.0.0",
+        "new": [
+            {
+                "icon": "number",
+                "title": "更好兼容性",
+                "subtitle": "在版本和構建中",
+                "body": "您現在可以使用 x.y.z 或 x.y。"
+            }
+        ]
+    },
+    {
+        "version": "3.9",
+        "new": [
+            {
+                "icon": "app.fill",
+                "title": "應用圖標",
+                "subtitle": "支持",
+                "body": "在 iOS 上。"
+            },
+            {
+                "icon": "app",
+                "title": "演示",
+                "subtitle": "現在好多了",
+                "body": "遵循包版本。"
+            }
+        ]
+    },
+    {
+        "version": "1.5",
+        "new": [
+            {
+                "icon": "hammer",
+                "title": "Layout",
+                "subtitle": "Fixed",
+                "body": "on iOS Landscape."
+            }
+        ]
+    },
+    {
+        "version": "1.4",
+        "new": [
+            {
+                "icon": "hammer",
+                "title": "Crash",
+                "subtitle": "Fixed",
+                "body": "on macOS."
+            }
+        ]
+    },
+    {
+        "version": "1.3",
+        "new": [
+            {
+                "icon": "bell.badge",
+                "title": "Remote Drop",
+                "subtitle": "Supported",
+                "body": "Instead of full page sheet, you can use a small drop too!"
+            }
+        ]
+    },
+    {
+        "version": "1.2",
+        "new": [
+            {
+                "icon": "square.and.arrow.down.fill",
+                "title": "Remote File",
+                "subtitle": "Supported",
+                "body": "Direct load via remote storage. Easy!"
+            }
+        ]
+    },
+    {
+        "version": "1.1",
+        "new": [
+            {
+                "icon": "hammer.fill",
+                "title": "Bug fixes",
+                "subtitle": "Broken UI",
+                "body": "Available for iOS 16, iPadOS 16, macOS 13"
+            },
+            {
+                "icon": "square.and.arrow.down.fill",
+                "title": "Local File",
+                "subtitle": "Supported",
+                "body": "Direct load via local storage. Super fast!"
+            },
+            {
+                "icon": "macpro.gen3.server",
+                "title": "Serverless",
+                "subtitle": "Design",
+                "body": "Free and open source! Created by Ming with ❤️‍🔥"
+            },
+            {
+                "icon": "arrow.triangle.pull",
+                "title": "Contribute",
+                "subtitle": "Together",
+                "body": "Pull requests and make it better for everyone!"
+            }
+        ]
+    }
+]
