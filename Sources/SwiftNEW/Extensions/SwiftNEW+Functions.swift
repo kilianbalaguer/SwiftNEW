@@ -20,7 +20,7 @@ extension SwiftNEW {
         versionText = ""
         buildText = ""
     }
-}
+
     
     // MARK: - Functions
     public func compareVersion() {
