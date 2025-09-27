@@ -1,5 +1,5 @@
 //
-//  CurrentVersionSheet.swift
+//  CurrentVersionView.swift
 //  SwiftNEW
 //
 //  Created by Ming on 11/6/2022.
@@ -13,7 +13,7 @@ import SwiftGlass
 extension SwiftNEW {
     
     // MARK: - Current Version Changes View
-    public var sheetCurrent: some View {
+    public var currentVersionView: some View {
         VStack(alignment: align) {
             Spacer()
             
@@ -105,6 +105,5 @@ extension SwiftNEW {
         #elseif os(tvOS)
         .frame(width: 600)
         #endif
-        .interactiveDismissDisabled(true)
     }
 }

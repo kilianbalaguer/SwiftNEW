@@ -16,32 +16,37 @@ import Drops
 @available(iOS 15.0, watchOS 8.0, macOS 12.0, tvOS 17.0, *)
 extension SwiftNEW {
     public var body: some View {
-        Button(action: {
+        VStack {
+            // Optional trigger button (if you still want it for navigation)
+            Button(action: {
 #if os(iOS)
-            if showDrop {
-                drop()
-            } else {
-                show = true
-            }
+                if showDrop {
+                    drop()
+                } else {
+                    show = true
+                }
 #else
-            show = true
+                show = true
 #endif
-        }) {
-            Label(label, systemImage: labelImage)
-                .frame(
-                    width: size == "mini" ? nil : (size == "invisible" ? 0 : platformWidth),
-                    height: size == "mini" ? nil : (size == "invisible" ? 0 : 50)
-                )
+            }) {
+                Label(label, systemImage: labelImage)
+                    .frame(
+                        width: size == "mini" ? nil : (size == "invisible" ? 0 : platformWidth),
+                        height: size == "mini" ? nil : (size == "invisible" ? 0 : 50)
+                    )
 #if os(iOS) && !os(visionOS)
                 .foregroundColor(labelColor)
                 .background(size != "mini" && size != "invisible" ? color : Color.clear)
                 .cornerRadius(15)
 #endif
-        }
-        .opacity(size == "invisible" ? 0 : 1)
-        .modifier(ConditionalGlassModifier(isEnabled: glass, shadowColor: color))
-        .sheet(isPresented: $show) {
-            sheetContent
+            }
+            .opacity(size == "invisible" ? 0 : 1)
+            .modifier(ConditionalGlassModifier(isEnabled: glass, shadowColor: color))
+            
+            // Main content view (always visible instead of in a sheet)
+            if show {
+                contentView
+            }
         }
     }
     
@@ -53,7 +58,7 @@ extension SwiftNEW {
 #endif
     }
     
-    private var sheetContent: some View {
+    private var contentView: some View {
         ZStack {
             // Special effects first — will appear behind the content
             Group {
@@ -74,18 +79,23 @@ extension SwiftNEW {
             
             // Main content (text, current sheet, history)
             VStack {
-                sheetCurrent
+                currentVersionView
                 if historySheet {
-                    historySheetContent
+                    historyView
                 }
             }
             .zIndex(1) // above the special effects
         }
         .background(.ultraThinMaterial)
-        .modifier(PresentationBackgroundModifier())
+        .modifier(ViewBackgroundModifier())
+        .cornerRadius(20)
+        .shadow(radius: 10)
+        .padding() // Add padding around the view
+        .transition(.scale.combined(with: .opacity)) // Add nice transition
+        .animation(.spring(response: 0.6, dampingFraction: 0.8), value: show)
     }
     
-    private var historySheetContent: some View {
+    private var historyView: some View {
         ZStack {
             // Special effects behind
             Group {
@@ -112,18 +122,21 @@ extension SwiftNEW {
 #endif
         }
         .background(.ultraThinMaterial)
-        .modifier(PresentationBackgroundModifier())
+        .modifier(ViewBackgroundModifier())
+        .cornerRadius(20)
+        .shadow(radius: 10)
+        .padding()
     }
     
-    
-    // MARK: - Background Modifier
-    private struct PresentationBackgroundModifier: ViewModifier {
+    // MARK: - Background Modifier for regular views
+    private struct ViewBackgroundModifier: ViewModifier {
         func body(content: Content) -> some View {
-            if #available(iOS 16.4, tvOS 16.4, *) {
-                content.presentationBackground(.thinMaterial)
-            } else {
-                content
-            }
+            content
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(.ultraThinMaterial)
+                        .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
+                )
         }
     }
     
