@@ -55,11 +55,11 @@ extension SwiftNEW {
     
     private var sheetContent: some View {
         ZStack {
+            // Background effects FIRST
             if mesh {
                 MeshView(color: $color)
             }
             
-            // Special Effects
             switch specialEffect {
             case "Christmas":
                 SnowfallView()
@@ -71,6 +71,7 @@ extension SwiftNEW {
                 EmptyView()
             }
             
+            // Foreground content LAST
             VStack {
                 sheetCurrent
                 if historySheet {
@@ -87,6 +88,7 @@ extension SwiftNEW {
     
     private var historySheetContent: some View {
         ZStack {
+            // Background effects FIRST
             if mesh {
                 MeshView(color: $color)
             }
@@ -102,6 +104,7 @@ extension SwiftNEW {
                 EmptyView()
             }
             
+            // History sheet content LAST
             sheetHistory
             #if os(visionOS)
             .padding()

@@ -28,7 +28,7 @@ extension SwiftNEW {
                     .bold()
                     .font(.largeTitle)
                     .multilineTextAlignment(.center) // center text
-                Text("\(String(localized: "Version", bundle: .module)) \(Bundle.versionBuild)")
+                Text("\(String(localized: "Version", bundle: .module))")
                     .bold()
                     .font(.title)
                     .foregroundColor(.secondary)
@@ -47,7 +47,7 @@ extension SwiftNEW {
                 .bold()
                 .font(.largeTitle)
                 .multilineTextAlignment(.center)
-            Text("\(String(localized: "Version", bundle: .module)) \(Bundle.versionBuild)")
+            Text("\(String(localized: "Version", bundle: .module))")
                 .bold()
                 .font(.title)
                 .foregroundColor(.secondary)
