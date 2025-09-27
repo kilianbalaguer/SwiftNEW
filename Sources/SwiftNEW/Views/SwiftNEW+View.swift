@@ -55,57 +55,58 @@ extension SwiftNEW {
     
     private var sheetContent: some View {
         ZStack {
-            // Background effects FIRST
+            // Special effects first — will appear behind the content
+            Group {
+                switch specialEffect {
+                case "Christmas": SnowfallView()
+                case "Release": BalloonView()
+                case "Halloween": HalloweenView()
+                default: EmptyView()
+                }
+            }
+            .zIndex(0) // behind main content
+
+            // Background Mesh
             if mesh {
                 MeshView(color: $color)
+                    .zIndex(0)
             }
-            
-            switch specialEffect {
-            case "Christmas":
-                SnowfallView()
-            case "Release":
-                BalloonView()
-            case "Halloween":
-                HalloweenView()
-            default:
-                EmptyView()
-            }
-            
-            // Foreground content LAST
+
+            // Main content (text, current sheet, history)
             VStack {
                 sheetCurrent
                 if historySheet {
                     historySheetContent
                 }
             }
-            #if os(visionOS)
-            .padding()
-            #endif
+            .zIndex(1) // above the special effects
         }
         .background(.ultraThinMaterial)
         .modifier(PresentationBackgroundModifier())
     }
-    
+
     private var historySheetContent: some View {
         ZStack {
-            // Background effects FIRST
+            // Special effects behind
+            Group {
+                switch specialEffect {
+                case "Christmas": SnowfallView()
+                case "Release": BalloonView()
+                case "Halloween": HalloweenView()
+                default: EmptyView()
+                }
+            }
+            .zIndex(0)
+
+            // Background Mesh
             if mesh {
                 MeshView(color: $color)
+                    .zIndex(0)
             }
-            
-            switch specialEffect {
-            case "Christmas":
-                SnowfallView()
-            case "Release":
-                BalloonView()
-            case "Halloween":
-                HalloweenView()
-            default:
-                EmptyView()
-            }
-            
-            // History sheet content LAST
+
+            // History content above effects
             sheetHistory
+                .zIndex(1)
             #if os(visionOS)
             .padding()
             #endif
@@ -113,7 +114,7 @@ extension SwiftNEW {
         .background(.ultraThinMaterial)
         .modifier(PresentationBackgroundModifier())
     }
-}
+
 
 // MARK: - Background Modifier
 private struct PresentationBackgroundModifier: ViewModifier {
