@@ -18,7 +18,6 @@ struct HalloweenView: View {
                 ForEach(pumpkins) { pumpkin in
                     Image("pumpkin", bundle: .module)
                         .resizable()
-                        .foregroundColor(.orange)
                         .frame(width: pumpkin.size, height: pumpkin.size)
                         .position(x: pumpkin.x, y: pumpkin.y)
                         .rotationEffect(.degrees(pumpkin.rotation))
