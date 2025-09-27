@@ -16,7 +16,7 @@ struct HalloweenView: View {
         GeometryReader { geometry in
             ZStack {
                 ForEach(pumpkins) { pumpkin in
-                    Image("pumpkin", bundle: .module)
+                    Image("Ghost", bundle: .module)
                         .resizable()
                         .frame(width: pumpkin.size, height: pumpkin.size)
                         .position(x: pumpkin.x, y: pumpkin.y)
