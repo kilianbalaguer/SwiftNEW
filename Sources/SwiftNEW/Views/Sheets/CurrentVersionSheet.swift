@@ -22,7 +22,7 @@ extension SwiftNEW {
             Spacer()
 
             if loading {
-                VStack {
+                VStack(spacing: 8) {
                     Text("Loading...")
                         .padding(.bottom)
                     ProgressView()
@@ -34,25 +34,33 @@ extension SwiftNEW {
                             ForEach(item.new, id: \.self) { new in
                                 HStack(alignment: .top) {
                                     if align == .leading || align == .center {
-                                        iconView(for: new)
+                                        ZStack {
+                                            color
+                                            Image(systemName: new.icon)
+                                                .foregroundColor(.white)
+                                        }
+                                        .glass(radius: 15, shadowColor: color)
+                                        .frame(width: 50, height: 50)
+                                        .cornerRadius(15)
+                                        .padding(.trailing)
                                     }
 
                                     VStack(alignment: align == .trailing ? .trailing : .leading, spacing: 4) {
-                                        Text(new.title)
-                                            .font(.headline)
-                                            .lineLimit(1)
-                                        Text(new.subtitle)
-                                            .font(.subheadline)
-                                            .foregroundColor(.secondary)
-                                            .lineLimit(1)
-                                        Text(new.body)
-                                            .font(.caption)
-                                            .foregroundColor(.secondary)
-                                            .lineLimit(2)
+                                        Text(new.title).font(.headline).lineLimit(1)
+                                        Text(new.subtitle).font(.subheadline).foregroundColor(.secondary).lineLimit(1)
+                                        Text(new.body).font(.caption).foregroundColor(.secondary).lineLimit(2)
                                     }
 
                                     if align == .trailing {
-                                        iconView(for: new)
+                                        ZStack {
+                                            color
+                                            Image(systemName: new.icon)
+                                                .foregroundColor(.white)
+                                        }
+                                        .glass(radius: 15, shadowColor: color)
+                                        .frame(width: 50, height: 50)
+                                        .cornerRadius(15)
+                                        .padding(.trailing)
                                     }
                                 }
                                 .padding(.bottom, 8)
@@ -60,6 +68,7 @@ extension SwiftNEW {
                         }
                     }
                 }
+                .frame(maxWidth: .infinity)
             }
 
             Spacer()
@@ -70,22 +79,5 @@ extension SwiftNEW {
             }
         }
         .onAppear { loadData() }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
-    private func iconView(for item: ChangeItem) -> some View {
-        ZStack {
-            color
-            Image(systemName: item.icon)
-                .foregroundColor(.white)
-        }
-        .glass(radius: 15, shadowColor: color)
-        #if !os(tvOS)
-        .frame(width: 50, height: 50)
-        #else
-        .frame(width: 100, height: 100)
-        #endif
-        .cornerRadius(15)
-        .padding(.trailing)
     }
 }

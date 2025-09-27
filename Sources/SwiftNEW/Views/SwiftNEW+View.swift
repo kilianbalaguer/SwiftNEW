@@ -18,50 +18,47 @@ extension SwiftNEW {
 
     public var body: some View {
         ZStack {
+            // Main full-screen sheet
             if show {
-                // Block interactions behind the view
-                Color.black.opacity(0.4)
-                    .ignoresSafeArea()
-                    .onTapGesture {} // disables taps behind
+                ZStack {
+                    // Block interaction behind the view
+                    Color.black.opacity(0.4).ignoresSafeArea()
+                        .onTapGesture { /* do nothing */ }
 
-                // Main full-screen content
-                VStack(spacing: 0) {
-                    // Special effects and background mesh
-                    ZStack {
-                        Group {
-                            switch specialEffect {
-                            case "Christmas": SnowfallView()
-                            case "Release": BalloonView()
-                            case "Halloween": HalloweenView()
-                            default: EmptyView()
-                            }
+                    // Background effects
+                    Group {
+                        switch specialEffect {
+                        case "Christmas": SnowfallView()
+                        case "Release": BalloonView()
+                        case "Halloween": HalloweenView()
+                        default: EmptyView()
                         }
-                        .ignoresSafeArea()
-                        .zIndex(0)
+                    }
+                    .zIndex(0)
 
-                        if mesh {
-                            MeshView(color: $color)
-                                .ignoresSafeArea()
-                                .zIndex(0)
-                        }
+                    if mesh {
+                        MeshView(color: $color)
+                            .zIndex(0)
                     }
 
                     // Main content
-                    VStack(spacing: 16) {
+                    VStack(spacing: 0) {
                         currentVersionView
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-                        if historySheet { historyView }
+                        if historySheet {
+                            historyView
+                        }
 
                         continueButton
+                            .padding(.top)
                     }
                     .padding()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(.ultraThinMaterial)
                     .cornerRadius(20)
                     .shadow(radius: 10)
                     .zIndex(1)
                 }
-                .transition(.scale.combined(with: .opacity))
+                .transition(.opacity)
                 .animation(.spring(response: 0.6, dampingFraction: 0.8), value: show)
             }
         }
@@ -83,17 +80,6 @@ extension SwiftNEW {
                 .frame(maxWidth: .infinity)
                 .background(color)
                 .cornerRadius(15)
-                .padding([.horizontal, .bottom])
-        }
-    }
-
-    private struct ViewBackgroundModifier: ViewModifier {
-        func body(content: Content) -> some View {
-            content.background(
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(.ultraThinMaterial)
-                    .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
-            )
         }
     }
 
