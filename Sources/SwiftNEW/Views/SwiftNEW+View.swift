@@ -17,26 +17,26 @@ import Drops
 extension SwiftNEW {
     public var body: some View {
         Button(action: {
-            #if os(iOS)
+#if os(iOS)
             if showDrop {
                 drop()
             } else {
                 show = true
             }
-            #else
+#else
             show = true
-            #endif
+#endif
         }) {
             Label(label, systemImage: labelImage)
                 .frame(
                     width: size == "mini" ? nil : (size == "invisible" ? 0 : platformWidth),
                     height: size == "mini" ? nil : (size == "invisible" ? 0 : 50)
                 )
-                #if os(iOS) && !os(visionOS)
+#if os(iOS) && !os(visionOS)
                 .foregroundColor(labelColor)
                 .background(size != "mini" && size != "invisible" ? color : Color.clear)
                 .cornerRadius(15)
-                #endif
+#endif
         }
         .opacity(size == "invisible" ? 0 : 1)
         .modifier(ConditionalGlassModifier(isEnabled: glass, shadowColor: color))
@@ -46,11 +46,11 @@ extension SwiftNEW {
     }
     
     private var platformWidth: CGFloat {
-        #if os(tvOS)
+#if os(tvOS)
         400
-        #else
+#else
         300
-        #endif
+#endif
     }
     
     private var sheetContent: some View {
@@ -65,13 +65,13 @@ extension SwiftNEW {
                 }
             }
             .zIndex(0) // behind main content
-
+            
             // Background Mesh
             if mesh {
                 MeshView(color: $color)
                     .zIndex(0)
             }
-
+            
             // Main content (text, current sheet, history)
             VStack {
                 sheetCurrent
@@ -84,7 +84,7 @@ extension SwiftNEW {
         .background(.ultraThinMaterial)
         .modifier(PresentationBackgroundModifier())
     }
-
+    
     private var historySheetContent: some View {
         ZStack {
             // Special effects behind
@@ -97,46 +97,47 @@ extension SwiftNEW {
                 }
             }
             .zIndex(0)
-
+            
             // Background Mesh
             if mesh {
                 MeshView(color: $color)
                     .zIndex(0)
             }
-
+            
             // History content above effects
             sheetHistory
                 .zIndex(1)
-            #if os(visionOS)
-            .padding()
-            #endif
+#if os(visionOS)
+                .padding()
+#endif
         }
         .background(.ultraThinMaterial)
         .modifier(PresentationBackgroundModifier())
     }
-
-
-// MARK: - Background Modifier
-private struct PresentationBackgroundModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        if #available(iOS 16.4, tvOS 16.4, *) {
-            content.presentationBackground(.thinMaterial)
-        } else {
-            content
+    
+    
+    // MARK: - Background Modifier
+    private struct PresentationBackgroundModifier: ViewModifier {
+        func body(content: Content) -> some View {
+            if #available(iOS 16.4, tvOS 16.4, *) {
+                content.presentationBackground(.thinMaterial)
+            } else {
+                content
+            }
         }
     }
-}
-
-// MARK: - Glass Modifier
-private struct ConditionalGlassModifier: ViewModifier {
-    let isEnabled: Bool
-    let shadowColor: Color
     
-    func body(content: Content) -> some View {
-        if isEnabled {
-            content.glass(shadowColor: shadowColor)
-        } else {
-            content
+    // MARK: - Glass Modifier
+    private struct ConditionalGlassModifier: ViewModifier {
+        let isEnabled: Bool
+        let shadowColor: Color
+        
+        func body(content: Content) -> some View {
+            if isEnabled {
+                content.glass(shadowColor: shadowColor)
+            } else {
+                content
+            }
         }
     }
 }
