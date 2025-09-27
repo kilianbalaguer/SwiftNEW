@@ -16,35 +16,55 @@ import Drops
 @available(iOS 15.0, watchOS 8.0, macOS 12.0, tvOS 17.0, *)
 extension SwiftNEW {
     public var body: some View {
-        Button(action: {
+        ZStack {
+            // Your button
+            Button(action: {
 #if os(iOS)
-            if showDrop {
-                drop()
-            } else {
-                show = true
-            }
+                if showDrop {
+                    drop()
+                } else {
+                    show = true
+                }
 #else
-            show = true
+                show = true
 #endif
-        }) {
-            Label(label, systemImage: labelImage)
-                .frame(
-                    width: size == "mini" ? nil : (size == "invisible" ? 0 : platformWidth),
-                    height: size == "mini" ? nil : (size == "invisible" ? 0 : 50)
-                )
+            }) {
+                Label(label, systemImage: labelImage)
+                    .frame(
+                        width: size == "mini" ? nil : (size == "invisible" ? 0 : platformWidth),
+                        height: size == "mini" ? nil : (size == "invisible" ? 0 : 50)
+                    )
 #if os(iOS) && !os(visionOS)
-                .foregroundColor(labelColor)
-                .background(size != "mini" && size != "invisible" ? color : Color.clear)
-                .cornerRadius(15)
+                    .foregroundColor(labelColor)
+                    .background(size != "mini" && size != "invisible" ? color : Color.clear)
+                    .cornerRadius(15)
 #endif
-        }
-        .opacity(size == "invisible" ? 0 : 1)
-        .modifier(ConditionalGlassModifier(isEnabled: glass, shadowColor: color))
-        .sheet(isPresented: $show) {
-            sheetContent
+            }
+            .opacity(size == "invisible" ? 0 : 1)
+            .modifier(ConditionalGlassModifier(isEnabled: glass, shadowColor: color))
+
+            // Full-screen overlay for sheetCurrent
+            if show {
+                ZStack {
+                    Color.black.opacity(0.4)
+                        .edgesIgnoringSafeArea(.all)
+                        .onTapGesture {
+                            show = false // dismiss on tap outside
+                        }
+
+                    sheetCurrent
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(.ultraThinMaterial)
+                        .cornerRadius(0)
+                        .zIndex(1)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                        .animation(.easeInOut, value: show)
+                }
+                .zIndex(100) // always above other content
+            }
         }
     }
-    
+
     private var platformWidth: CGFloat {
 #if os(tvOS)
         400
@@ -52,7 +72,7 @@ extension SwiftNEW {
         300
 #endif
     }
-    
+
     private var sheetContent: some View {
         ZStack {
             // Special effects first — will appear behind the content
@@ -65,13 +85,13 @@ extension SwiftNEW {
                 }
             }
             .zIndex(0) // behind main content
-            
+
             // Background Mesh
             if mesh {
                 MeshView(color: $color)
                     .zIndex(0)
             }
-            
+
             // Main content (text, current sheet, history)
             VStack {
                 sheetCurrent
@@ -84,7 +104,7 @@ extension SwiftNEW {
         .background(.ultraThinMaterial)
         .modifier(PresentationBackgroundModifier())
     }
-    
+
     private var historySheetContent: some View {
         ZStack {
             // Special effects behind
@@ -97,13 +117,13 @@ extension SwiftNEW {
                 }
             }
             .zIndex(0)
-            
+
             // Background Mesh
             if mesh {
                 MeshView(color: $color)
                     .zIndex(0)
             }
-            
+
             // History content above effects
             sheetHistory
                 .zIndex(1)
@@ -114,8 +134,7 @@ extension SwiftNEW {
         .background(.ultraThinMaterial)
         .modifier(PresentationBackgroundModifier())
     }
-    
-    
+
     // MARK: - Background Modifier
     private struct PresentationBackgroundModifier: ViewModifier {
         func body(content: Content) -> some View {
@@ -126,12 +145,12 @@ extension SwiftNEW {
             }
         }
     }
-    
+
     // MARK: - Glass Modifier
     private struct ConditionalGlassModifier: ViewModifier {
         let isEnabled: Bool
         let shadowColor: Color
-        
+
         func body(content: Content) -> some View {
             if isEnabled {
                 content.glass(shadowColor: shadowColor)
