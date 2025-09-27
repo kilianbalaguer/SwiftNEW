@@ -1,3 +1,11 @@
+//
+//  HalloweenView.swift
+//  SwiftNEW
+//
+//  Created by Kilian Balaguer on 26/09/2025.
+//
+
+
 import SwiftUI
 
 struct HalloweenView: View {
@@ -8,11 +16,11 @@ struct HalloweenView: View {
         GeometryReader { geometry in
             ZStack {
                 ForEach(pumpkins) { pumpkin in
-                    Image("Ghost", bundle: .module)
+                    Image(systemName: "seal.fill") // Replace with pumpkin asset if you have
                         .resizable()
+                        .foregroundColor(.orange)
                         .frame(width: pumpkin.size, height: pumpkin.size)
-                        .offset(x: pumpkin.x - geometry.size.width/2,
-                                y: pumpkin.y - geometry.size.height/2)
+                        .position(x: pumpkin.x, y: pumpkin.y)
                         .rotationEffect(.degrees(pumpkin.rotation))
                 }
             }
@@ -21,7 +29,7 @@ struct HalloweenView: View {
                     pumpkins.append(Pumpkin(
                         id: UUID(),
                         x: CGFloat.random(in: 0...geometry.size.width),
-                        y: CGFloat.random(in: 0...geometry.size.height),
+                        y: CGFloat.random(in: -200...geometry.size.height),
                         size: CGFloat.random(in: 20...50),
                         speed: CGFloat.random(in: 1...2),
                         rotation: Double.random(in: 0...360)
@@ -32,14 +40,13 @@ struct HalloweenView: View {
                 for index in pumpkins.indices {
                     pumpkins[index].y += pumpkins[index].speed
                     pumpkins[index].rotation += Double.random(in: -2...2)
-                    if pumpkins[index].y > geometry.size.height {
+                    if pumpkins[index].y > geometry.size.height + 50 {
                         pumpkins[index].y = -50
                         pumpkins[index].x = CGFloat.random(in: 0...geometry.size.width)
                     }
                 }
             }
         }
-        .drawingGroup() // optional for better performance
     }
 }
 
