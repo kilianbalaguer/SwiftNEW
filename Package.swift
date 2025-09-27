@@ -34,7 +34,9 @@ let package = Package(
                 .product(name: "SwiftGlass", package: "SwiftGlass")
             ],
             resources: [
-                .process("Localizable.xcstrings")
+                .process("Localizable.xcstrings"),
+                .process("Resources")
+
             ]
         )
     ]

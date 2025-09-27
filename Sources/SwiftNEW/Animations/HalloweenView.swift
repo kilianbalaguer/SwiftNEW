@@ -16,7 +16,7 @@ struct HalloweenView: View {
         GeometryReader { geometry in
             ZStack {
                 ForEach(pumpkins) { pumpkin in
-                    Image(systemName: "seal.fill") // Replace with pumpkin asset if you have
+                    Image("pumpkin", bundle: .module)
                         .resizable()
                         .foregroundColor(.orange)
                         .frame(width: pumpkin.size, height: pumpkin.size)
