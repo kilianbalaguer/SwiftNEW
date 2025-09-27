@@ -16,54 +16,53 @@ import Drops
 @available(iOS 15.0, watchOS 8.0, macOS 12.0, tvOS 17.0, *)
 extension SwiftNEW {
 
+    @AppStorage("lastSeenWhatsNewVersion") private var lastSeenVersion: String = ""
+    
     public var body: some View {
         ZStack {
-            // Main full-screen sheet
             if show {
-                ZStack {
-                    // Block interaction behind the view
-                    Color.black.opacity(0.4).ignoresSafeArea()
-                        .onTapGesture { /* do nothing */ }
+                // Block taps behind
+                Color.black.opacity(0.4)
+                    .ignoresSafeArea()
+                    .onTapGesture { /* Do nothing */ }
 
-                    // Background effects
-                    Group {
-                        switch specialEffect {
-                        case "Christmas": SnowfallView()
-                        case "Release": BalloonView()
-                        case "Halloween": HalloweenView()
-                        default: EmptyView()
-                        }
+                // Special effects
+                Group {
+                    switch specialEffect {
+                    case "Christmas": SnowfallView()
+                    case "Release": BalloonView()
+                    case "Halloween": HalloweenView()
+                    default: EmptyView()
                     }
-                    .zIndex(0)
-
-                    if mesh {
-                        MeshView(color: $color)
-                            .zIndex(0)
-                    }
-
-                    // Main content
-                    VStack(spacing: 0) {
-                        currentVersionView
-                        if historySheet {
-                            historyView
-                        }
-
-                        continueButton
-                            .padding(.top)
-                    }
-                    .padding()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(.ultraThinMaterial)
-                    .cornerRadius(20)
-                    .shadow(radius: 10)
-                    .zIndex(1)
                 }
+                .zIndex(0)
+
+                // Background mesh
+                if mesh {
+                    MeshView(color: $color)
+                        .zIndex(0)
+                }
+
+                // Main content
+                VStack(spacing: 0) {
+                    currentVersionView
+                    if historySheet {
+                        HistorySheet(items: items, color: color)
+                    }
+                    continueButton
+                        .padding(.top)
+                }
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(.ultraThinMaterial)
+                .cornerRadius(20)
+                .shadow(radius: 10)
+                .zIndex(1)
                 .transition(.opacity)
                 .animation(.spring(response: 0.6, dampingFraction: 0.8), value: show)
             }
         }
         .onAppear {
-            // Auto-show only once per version
             if lastSeenVersion != Bundle.version {
                 show = true
                 lastSeenVersion = Bundle.version
